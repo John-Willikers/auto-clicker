@@ -1,6 +1,7 @@
 import os
 import pyautogui
 import time
+from pyscreeze import ImageGrab
 
 print(os.getcwd())
 
@@ -14,31 +15,28 @@ threshold = 0.9
 while True:
     try:
         print("Checking for Launcher Download Button")
-        launcher_location = pyautogui.locateOnScreen(launcher_download_path, confidence=threshold)
+        screenshot = ImageGrab.grab(all_screens=True)
+        launcher_location = pyautogui.locate(launcher_download_path, screenshot, confidence=threshold)
 
         if launcher_location is not None:
-            # Click on the launcher download button if found
             pyautogui.click(launcher_location.left + 5, launcher_location.top + 5)
 
-        # Introduce a delay before taking the screenshot
         time.sleep(3)
-    
-    except pyautogui.ImageNotFoundException:
-        # Handle the exception (e.g., print a message)
-        print("Image not found. Waiting for the element to appear.")
-        time.sleep(3)  # Add a delay before retrying
+
+    except Exception as e:
+        print(f"Error: {e}. Waiting for the element to appear.")
+        time.sleep(3)
 
     try:
         print("Checking for Website Download Button")
-        website_location = pyautogui.locateOnScreen(website_download_path, confidence=threshold)
+        screenshot = ImageGrab.grab(all_screens=True)
+        website_location = pyautogui.locate(website_download_path, screenshot, confidence=threshold)
 
         if website_location is not None:
-            # Click on the website download button if found
             pyautogui.click(website_location.left + 5, website_location.top + 5)
 
         time.sleep(3)
         print("Waiting for 5 seconds...")
-    except pyautogui.ImageNotFoundException:
-        # Handle the exception (e.g., print a message)
-        print("Image not found. Waiting for the element to appear.")
-        time.sleep(3)  # Add a delay before retrying
+    except Exception as e:
+        print(f"Error: {e}. Waiting for the element to appear.")
+        time.sleep(3)
